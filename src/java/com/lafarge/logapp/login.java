@@ -97,34 +97,33 @@ public class login extends HttpServlet {
         Members mbs = new Members();
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session sess = sessionFactory.openSession();
-        Transaction tx = sess.beginTransaction();
-//        try {
-//            Query query = sess.getNamedQuery("Members.findByUserName");
-//            List<Members> list = query.list();
-//            for (Members mem : list) {
-//                System.out.println("List of Employees: " + mem.getUserName()+"");
-//            }
-//        } finally {
-//            pw.println("<h4>lol3</h4>");
-//            tx.commit();
-//            sessionFactory.close();
-//            //mbs = null;
-//        }
-//        response.setHeader("Refresh", "5; URL=" + request.getContextPath() + "/welcome.jsp");
+        sess.beginTransaction();
+        try {
+            Query query = sess.createQuery("from Members");
+            List<Members> list = query.list();
 
-        mbs = (Members) sess.get(Members.class, 1);
+            for (Members mem : list) {
+                if(mem.getUserName().equalsIgnoreCase(userN) && mem.getPassword().equals(passW)){
+                    pw.println("<h4>Employee: " + mem.getUserName()+" "+mem.getPassword()+"</h4>");
+                    session.setAttribute("userN", userN);
+                    pw.println("1: "+session.getAttribute("userN"));
+                }
+            }
 
-        if (mbs.getUserName().equalsIgnoreCase(userN) && mbs.getPassword().equals(passW)) {
-            session.setAttribute("userN", userN);
-            session.setAttribute("login", "loged");
-            response.sendRedirect(request.getContextPath() + "/alerts.jsp");
-            tx.commit();
-            sessionFactory.close();
+            if(session.getAttribute("userN") == null){
+                session.setAttribute("login", null);
+                response.sendRedirect(request.getContextPath() + "/alerts.jsp");
+            }
+            else if(session.getAttribute("userN") != null){
+                session.setAttribute("login", "loged");
+                response.sendRedirect(request.getContextPath() + "/alerts.jsp");
+            }
+        } finally {
+            sess.getTransaction().commit();
+            sess.close();
             mbs = null;
-        } else {
-            session.setAttribute("login", null);
-            response.sendRedirect(request.getContextPath() + "/alerts.jsp");
         }
+        //response.setHeader("Refresh", "10; URL=" + request.getContextPath() + "/welcome.jsp");
         processRequest(request, response);
     }
 
