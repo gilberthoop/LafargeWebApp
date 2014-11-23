@@ -26,9 +26,16 @@
     </head>
     <body>
         <div id="login-overlay" class="modal-dialog well">
-            <div class="modal-header">      
-                <h4 class="modal-title">Lafarge sign-in system</h4>
-                <h4 class="modal-title"><%=new Date()%></h4>
+            <div class="row modal-header">   
+                <div class="col-xs-5 col-sm-8 col-md-8">
+                    <h4 class="modal-title">Lafarge sign-in system</h4>
+                    <h4 class="modal-title"><%=new Date()%></h4>
+                </div>
+                <div class="col-xs-7 col-sm-4 col-md-4">
+                    <a class="brand" href="http://www.lafarge.com/">
+                        <img src="http://www.lafarge.com/wps/themes/html/CommonFiles/img/logo-EN.png" alt="">
+                    </a>
+                </div>
             </div>
             <%//out.println(request.getHeader("referer")+" "+session.getAttribute("login")+" "+session.getAttribute("registration"));%>
             <% if ((request.getHeader("referer").contains("LafargeLogApp") || request.getHeader("referer").contains("index")) && (session.getAttribute("login") == null && session.getAttribute("registration") == null)) {%>

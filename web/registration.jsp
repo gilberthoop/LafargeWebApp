@@ -21,7 +21,7 @@
                 $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
             });
         </script>
-                <style>
+        <style>
             body{
                 background: url(http://mymaplist.com/img/parallax/back.png);
                 background-color: #444;
@@ -32,15 +32,18 @@
     <body>
         <div id="login-overlay" class="modal-dialog well">
             <div class="row modal-header"> 
-                <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="col-xs-5 col-sm-8 col-md-8">
                     <h4 class="modal-title">Lafarge registration system</h4>
                     <h4 class="modal-title"><%=new Date()%></h4>
+                    <a href="index.jsp" class="btn btn-info">Login</a>
                 </div>
-                <div class="col-xs-4 col-sm-4 col-md-4">
-                    <a href="index.jsp" class="btn btn-info btn-block">Login</a>
+                <div class="col-xs-7 col-sm-4 col-md-4">
+                    <a class="brand" href="http://www.lafarge.com/">
+                        <img src="http://www.lafarge.com/wps/themes/html/CommonFiles/img/logo-EN.png" alt="">
+                    </a>
                 </div>
             </div>
-            <form role="registrationForm" name="registrationForm" action="registration" method="POST" onsubmit="return validateForm()">
+            <form name="registrationForm" action="registration" method="POST" onsubmit="return validateForm()">
                 <div class="form-group">
                     <label for="firstname">First Name:</label>
                     <input type="text" class="form-control" name="firstname" placeholder="Enter first name" required/>  
