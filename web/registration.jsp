@@ -21,6 +21,13 @@
                 $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
             });
         </script>
+                <style>
+            body{
+                background: url(http://mymaplist.com/img/parallax/back.png);
+                background-color: #444;
+                background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png);    
+            }
+        </style>
     </head>
     <body>
         <div id="login-overlay" class="modal-dialog well">

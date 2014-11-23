@@ -13,15 +13,29 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
+        
         <title>App</title>
         <script>
             $(function () {
                 $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
             });
         </script>
+        <style>
+            body{
+                background: url(http://mymaplist.com/img/parallax/back.png);
+                background-color: #444;
+                background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png);    
+            }
+        </style>
     </head>
     <body>
+        <%
+            if(session.getAttribute("login") == null || session.getAttribute("login") == ""){
+                session.setAttribute("login", null);
+                session.setAttribute("userN", null);
+                session.setAttribute("registration", null);
+            } 
+        %>
         <div id="login-overlay" class="modal-dialog well">
             <div class="modal-header">   
                 <h4 class="modal-title">Lafarge sign-in system</h4>

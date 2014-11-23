@@ -94,7 +94,6 @@ public class login extends HttpServlet {
         String userN = request.getParameter("userName");
         String passW = request.getParameter("password");
 
-        Members mbs = new Members();
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session sess = sessionFactory.openSession();
         sess.beginTransaction();
@@ -104,12 +103,10 @@ public class login extends HttpServlet {
 
             for (Members mem : list) {
                 if(mem.getUserName().equalsIgnoreCase(userN) && mem.getPassword().equals(passW)){
-                    pw.println("<h4>Employee: " + mem.getUserName()+" "+mem.getPassword()+"</h4>");
                     session.setAttribute("userN", userN);
-                    pw.println("1: "+session.getAttribute("userN"));
                 }
             }
-
+            pw.println("<h4>1: "+session.getAttribute("userN")+"</h4>");
             if(session.getAttribute("userN") == null){
                 session.setAttribute("login", null);
                 response.sendRedirect(request.getContextPath() + "/alerts.jsp");
@@ -121,7 +118,6 @@ public class login extends HttpServlet {
         } finally {
             sess.getTransaction().commit();
             sess.close();
-            mbs = null;
         }
         //response.setHeader("Refresh", "10; URL=" + request.getContextPath() + "/welcome.jsp");
         processRequest(request, response);
