@@ -103,6 +103,7 @@ public class login extends HttpServlet {
 
             for (Members mem : list) {
                 if(mem.getUserName().equalsIgnoreCase(userN) && mem.getPassword().equals(passW)){
+                    userN = userN.toLowerCase();
                     session.setAttribute("userN", userN);
                 }
             }
@@ -112,7 +113,7 @@ public class login extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/alerts.jsp");
             }
             else if(session.getAttribute("userN") != null){
-                session.setAttribute("login", "loged");
+                session.setAttribute("login", "logedin");
                 response.sendRedirect(request.getContextPath() + "/alerts.jsp");
             }
         } finally {

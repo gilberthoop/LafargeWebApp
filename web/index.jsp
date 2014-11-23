@@ -30,10 +30,8 @@
     </head>
     <body>
         <%
-            if (session.getAttribute("login") == null || session.getAttribute("login") == "") {
-                session.setAttribute("login", null);
-                session.setAttribute("userN", null);
-                session.setAttribute("registration", null);
+            if (session.getAttribute("login") == null || session.getAttribute("logout") != null) {
+                session.invalidate();
             }
         %>
         <div id="login-overlay" class="modal-dialog well">

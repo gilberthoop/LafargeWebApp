@@ -78,11 +78,12 @@ public class logout extends HttpServlet {
         pw.println("<title>Servlet logout</title>");
         pw.println("</head>");
         pw.println("<body>");
-        //pw.println("<h1>Servlet logout at " + request.getContextPath() + "</h1>");
 
+        session.setAttribute("login", null);
         session.setAttribute("userN", null);
-        session.invalidate();
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        session.setAttribute("registration", null);
+        session.setAttribute("logout", "loggedout");
+        response.sendRedirect(request.getContextPath() + "/alerts.jsp");
         
         processRequest(request, response);
     }

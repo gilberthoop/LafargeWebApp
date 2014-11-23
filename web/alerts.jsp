@@ -37,8 +37,8 @@
                     </a>
                 </div>
             </div>
-            <%//out.println(request.getHeader("referer")+" "+session.getAttribute("login")+" "+session.getAttribute("registration"));%>
-            <% if ((request.getHeader("referer").contains("LafargeLogApp") || request.getHeader("referer").contains("index")) && (session.getAttribute("login") == null && session.getAttribute("registration") == null)) {%>
+            <%//out.println(request.getHeader("referer")+" "+session.getAttribute("login")+" "+session.getAttribute("logout"));%>
+            <% if ((request.getHeader("referer").contains("LafargeLogApp") || request.getHeader("referer").contains("index")) && (session.getAttribute("login") == null && session.getAttribute("registration") == null && session.getAttribute("logout") == null)) {%>
             <div class="alert alert-danger">Invalid username or password <a href='index.jsp'>try again</a></div>
             <%} else if ((request.getHeader("referer").contains("/") || request.getHeader("referer").contains("index")) && session.getAttribute("login") != null && session.getAttribute("userN") != null) {%>
             <div class="alert alert-success">Login successful! Please wait...<%response.setHeader("Refresh", "3; URL=" + request.getContextPath() + "/welcome.jsp");%></div>
@@ -46,6 +46,8 @@
             <div class="alert alert-success">Registration successful! Login <a href='index.jsp'>here</a></div> 
             <%} else if (request.getHeader("referer").contains("registration") && (session.getAttribute("login") == null && session.getAttribute("registration") == null)) {%>
             <div class="alert alert-danger">Registration Failed! <a href='index.jsp'>try again</a></div> 
+            <%} else if (request.getHeader("referer").contains("welcome") && session.getAttribute("login") == null && session.getAttribute("logout") != null) {%>
+            <div class="alert alert-danger">Logging out! Please wait...<%response.setHeader("Refresh", "3; URL=" + request.getContextPath() + "/index.jsp");%></div> 
             <%} else{%>
             <div class="alert alert-warning"><% out.println("<a href='http://www.lafarge.com/'>Visit Lafarge's Website</a> or click <a href='index.jsp'>here</a>  to return to the log in system."); %></div> 
             <%}%>
