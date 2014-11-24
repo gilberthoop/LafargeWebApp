@@ -5,6 +5,8 @@
     <class>com.lafarge.logapp.NewEntity</class>
     <class>com.lafarge.members.memberDetails</class>
     <class>com.lafarge.members.Members</class>
+    <class>com.lafarge.members.EmployeesSigninSignoff</class>
+    <class>com.lafarge.members.EmployeesInfo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/lafargelogapp?zeroDateTimeBehavior=convertToNull"/>
