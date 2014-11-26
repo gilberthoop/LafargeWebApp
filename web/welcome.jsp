@@ -4,6 +4,12 @@
     Author     : 300091186
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="org.hibernate.Query"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="org.hibernate.SessionFactory"%>
+<%@page import="com.lafarge.members.EmployeesInfo"%>
+<%@page import="com.lafarge.members.EmployeesSigninSignoff"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.lafarge.logapp.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,42 +22,6 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-        <script>
-            $(function () {
-                $(".update_button").click(function () {
-
-                    var boxval = $("#content").val();
-                    var dataString = 'content=' + boxval;
-
-                    if (boxval == '')
-                    {
-                        alert("Please Enter Some Text");
-                    }
-                    else
-                    {
-                        $("#flash").show();
-                        $("#flash").fadeIn(400).html('<img src="ajax-loader.gif" align="absmiddle"> 
-                                < span class = "loading" > Loading Comment... < /span>');
-
-                        $.ajax({
-                            type: "POST",
-                            url: "demo.jsp",
-                            data: dataString,
-                            cache: false,
-                            success: function (html) {
-                                $("ol#update").prepend(html);
-                                $("ol#update li:first").slideDown("slow");
-                                $("#content").value('');
-                                $("#content").focus();
-                                $("#flash").hide();
-                            }
-                        });
-                    }
-                    return false;
-                });
-            });
-        </script>
 
         <style>
             body{
@@ -122,7 +92,7 @@
                                 <label for="empty"></label>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
-                                <button type="submit" class="btn btn-success btn-block">Sign-in</button>
+                                <button type="submit" class="update_button">Sign-in</button>
                             </div>
                         </div>
                     </form>
@@ -132,55 +102,42 @@
                 <div class="col-md-1 column">
                 </div>
 
-
                 <% if (session.getAttribute("welcome") == null || session.getAttribute("welcome") == "") {%>
                 <%//out.println(request.getHeader("referer"));%>
                 <%} else {%>
                 <div id="flash" class="col-md-6 column well">
+                    <%
+                        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+                        Session sess = sessionFactory.openSession();
+                        sess.beginTransaction();
+
+                        try {
+
+                            Query query = sess.createQuery("from EmployeesSigninSignoff");
+                            List<EmployeesSigninSignoff> list = query.list();
+                            for (EmployeesSigninSignoff ei : list) {
+                                System.out.println(ei.getFullName());
+                    %>
                     <div id="update" class="row form-group">                        
                         <div class="col-xs-9 col-sm-10 col-md-10">
-                            <input type="text" class="form-control" name="worker" placeholder="worker's name" required/>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-2">
-                            <form action="" method="POST">
-                                <button type="submit" class="btn btn-danger">Sign-out</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row form-group">                        
-                        <div class="col-xs-9 col-sm-10 col-md-10">
-                            <input type="text" class="form-control" name="worker" placeholder="worker's name" required/>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-2">
-                            <form action="" method="POST">
-                                <button type="submit" class="btn btn-danger">Sign-out</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row form-group">                        
-                        <div class="col-xs-9 col-sm-10 col-md-10">
-                            <input type="text" class="form-control" name="worker" placeholder="worker's name" required/>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-2">
-                            <form action="" method="POST">
-                                <button type="submit" class="btn btn-danger">Sign-out</button>
-                            </form>
-                        </div>
-                    </div>
 
-                    <div class="row form-group">                        
-                        <div class="col-xs-9 col-sm-10 col-md-10">
-                            <input type="text" class="form-control" name="worker" placeholder="worker's name" required/>
+                            <h4><% ei.getFullName(); %></h4>
                         </div>
                         <div class="col-xs-3 col-sm-2 col-md-2">
                             <form action="" method="POST">
-                                <button type="submit" class="btn btn-danger">Sign-out</button>                            
+                                <button type="submit" class="btn btn-danger">Sign-out</button>
                             </form>
                         </div>
                     </div>
+                    <%}
+
+                        } finally {
+                            sess.getTransaction().commit();
+                            sess.close();
+                        }
+                    %>
                 </div>
                 <%}%>
-
             </div>
         </div>
     </body>

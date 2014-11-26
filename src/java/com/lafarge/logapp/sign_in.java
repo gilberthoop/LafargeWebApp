@@ -111,7 +111,7 @@ public class sign_in extends HttpServlet {
                 Date date = new Date();
                 ess.setSignInTime(new Timestamp(date.getTime()));
                 sess.save(ess);
-            } else {pw.println("done");
+            } else {
                 eio.setFullName(fullName);
                 eio.setPhoneNumber(phoneNumber);
                 eio.setCompany(company);
@@ -130,6 +130,7 @@ public class sign_in extends HttpServlet {
             sess.close();
         }
         response.sendRedirect(request.getContextPath() + "/welcome.jsp");
+        //response.setHeader("Refresh", "100; URL=" + request.getContextPath() + "/welcome.jsp");
         processRequest(request, response);
     }
 
