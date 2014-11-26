@@ -24,6 +24,34 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+        <script>
+            $(function () {
+                $("#names").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "sign_in",
+                            type: "POST",
+                            dataType: "json",
+                            data: {name: request.term},
+                            success: function (data) {
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name,
+                                        value: item.value,
+                                    }
+                                }));
+                            },
+                            error: function (error) {
+                                alert('error: ' + error);
+                            }
+                        });
+                    },
+                    minLength: 2
+                });
+            });
+        </script>
+
         <style>
             body{
                 background: url(http://mymaplist.com/img/parallax/back.png);
@@ -31,14 +59,14 @@
                 background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png);    
             }
             h6 { 
-    display: block;
-    font-size: 1.5em;
-    //margin-top: 0.5em;
-    //margin-bottom: 0.5em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
-}
+                display: block;
+                font-size: 1.5em;
+                //margin-top: 0.5em;
+                //margin-bottom: 0.5em;
+                margin-left: 0;
+                margin-right: 0;
+                font-weight: bold;
+            }
 
         </style>
     </head>
@@ -97,8 +125,18 @@
                                 <input type="text" class="form-control" name="company" id="content" placeholder="Company" required/>
                             </div>
                         </div>
-
+                        
+                        <% if (session.getAttribute("orientation") != null) {%>
                         <div class="row">
+                            <div class="col-xs-9 col-sm-9 col-md-9">
+                            <a href="" class="btn btn-info btn-block">Orientation Required</a>
+                        </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                <button type="submit" class="btn btn-success btn-block">Sign-in</button>
+                            </div>
+                        </div>
+                        <%session.setAttribute("orientation", null);} else {%>
+                            <div class="row">
                             <div class="col-xs-9 col-sm-9 col-md-9">
                                 <label for="empty"></label>
                             </div>
@@ -106,7 +144,9 @@
                                 <button type="submit" class="btn btn-success btn-block">Sign-in</button>
                             </div>
                         </div>
+                        <%}%>
                     </form>
+                   
                     <%}%>
                 </div>
 

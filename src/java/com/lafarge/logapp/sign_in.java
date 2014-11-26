@@ -113,7 +113,8 @@ public class sign_in extends HttpServlet {
                 }
                 else if(ei.getFullName().equalsIgnoreCase(fullName) && ei.getPhoneNumber().equals(phoneNumber) && ei.getAllowLogin().equalsIgnoreCase("no")){
                     found = true; 
-                    context = "/orientation.jsp";
+                    session.setAttribute("orientation", "orientationNeeded");
+                    context = "/welcome.jsp";
                 }
             }
             
