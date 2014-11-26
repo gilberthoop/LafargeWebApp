@@ -10,7 +10,6 @@ import com.lafarge.members.EmployeesSigninSignoff;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -27,8 +26,8 @@ import org.hibernate.SessionFactory;
  *
  * @author clementino
  */
-@WebServlet(name = "sign_in", urlPatterns = {"/sign_in"})
-public class sign_in extends HttpServlet {
+@WebServlet(name = "sign_out", urlPatterns = {"/sign_out"})
+public class sign_out extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,6 +42,7 @@ public class sign_in extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("</body>");
             out.println("</html>");
         }
@@ -83,68 +83,30 @@ public class sign_in extends HttpServlet {
         pw.println("<title>App login</title>");
         pw.println("</head>");
         pw.println("<body>");
-        String fullName = request.getParameter("fullName");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String company = request.getParameter("company");
-        boolean found = false;
 
         EmployeesSigninSignoff ess = new EmployeesSigninSignoff();
-        EmployeesInfo eio = new EmployeesInfo();
 
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session sess = sessionFactory.openSession();
         sess.beginTransaction();
-        Calendar cal = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-        String context= "/welcome.jsp";
+
         try {
-            Query query = sess.createQuery("from EmployeesInfo");
-            List<EmployeesInfo> list = query.list();
-            for (EmployeesInfo ei : list) {
-                if (ei.getFullName().equalsIgnoreCase(fullName) && ei.getPhoneNumber().equals(phoneNumber) && ei.getAllowLogin().equalsIgnoreCase("yes")) {
-                    fullName = fullName.toLowerCase();
-                    found = true; 
-                    pw.println(ei.getAllowLogin());
-                    cal.setTime(ei.getPreviousOrientationDate());
-                    if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 0 || (cal.get(Calendar.MONTH)+1)-(now.get(Calendar.MONTH)+1) == 0 ){
-                        ei.setAllowLogin("no");
-                    }
-                    context = "/welcome.jsp";
-                }
-                else if(ei.getFullName().equalsIgnoreCase(fullName) && ei.getPhoneNumber().equals(phoneNumber) && ei.getAllowLogin().equalsIgnoreCase("no")){
-                    found = true; 
-                    context = "/orientation.jsp";
+            Query query = sess.createQuery("from EmployeesSigninSignoff");
+            List<EmployeesSigninSignoff> list = query.list();
+            for (EmployeesSigninSignoff ei : list) {
+                if (ei.getPhoneNumber().equalsIgnoreCase(request.getParameter("logoutWorker"))) {
+                    String hql = "delete from EmployeesSigninSignoff where phoneNumber = :pNumber";
+                    Query q = sess.createQuery(hql);
+                    q.setString("pNumber", request.getParameter("logoutWorker"));
+                    q.executeUpdate();
                 }
             }
-            
-            if (found == true) {
-                ess.setFullName(fullName);
-                ess.setPhoneNumber(phoneNumber);
-                ess.setCompany(company);
-                Date date = new Date();
-                ess.setSignInTime(new Timestamp(date.getTime()));
-                sess.save(ess);
-            } else {
-                eio.setFullName(fullName);
-                eio.setPhoneNumber(phoneNumber);
-                eio.setCompany(company);
-                Date date = new Date();
-                eio.setPreviousOrientationDate(new Timestamp(date.getTime()));
-                eio.setAllowLogin("yes");
-                sess.save(eio);
-                ess.setFullName(fullName);
-                ess.setPhoneNumber(phoneNumber);
-                ess.setCompany(company);
-                ess.setSignInTime(new Timestamp(date.getTime()));
-                sess.save(ess);
-            }
+
         } finally {
             sess.getTransaction().commit();
             sess.close();
-            session.setAttribute("sign_in", "signedin");
         }
-        response.sendRedirect(request.getContextPath() + context);
-        //response.setHeader("Refresh", "1000; URL=" + request.getContextPath() + context);
+        response.sendRedirect(request.getContextPath() + "/welcome.jsp");
         processRequest(request, response);
     }
 

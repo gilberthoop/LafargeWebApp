@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,12 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "employees_info")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EmployeesInfo.findAll", query = "SELECT e FROM EmployeesInfo e"),
-    @NamedQuery(name = "EmployeesInfo.findById", query = "SELECT e FROM EmployeesInfo e WHERE e.id = :id"),
-    @NamedQuery(name = "EmployeesInfo.findByFullName", query = "SELECT e FROM EmployeesInfo e WHERE e.fullName = :fullName"),
-    @NamedQuery(name = "EmployeesInfo.findByPhoneNumber", query = "SELECT e FROM EmployeesInfo e WHERE e.phoneNumber = :phoneNumber"),
-    @NamedQuery(name = "EmployeesInfo.findByCompany", query = "SELECT e FROM EmployeesInfo e WHERE e.company = :company"),
-    @NamedQuery(name = "EmployeesInfo.findByPreviousOrientationDate", query = "SELECT e FROM EmployeesInfo e WHERE e.previousOrientationDate = :previousOrientationDate")})
+    @NamedQuery(name = "EmployeesInfo.findAll", query = "SELECT e FROM EmployeesInfo e")})
 public class EmployeesInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,6 +50,10 @@ public class EmployeesInfo implements Serializable {
     @Column(name = "previousOrientationDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date previousOrientationDate;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "allowLogin")
+    private String allowLogin;
 
     public EmployeesInfo() {
     }
@@ -62,12 +62,13 @@ public class EmployeesInfo implements Serializable {
         this.id = id;
     }
 
-    public EmployeesInfo(Integer id, String fullName, String phoneNumber, String company, Date previousOrientationDate) {
+    public EmployeesInfo(Integer id, String fullName, String phoneNumber, String company, Date previousOrientationDate, String allowLogin) {
         this.id = id;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.company = company;
         this.previousOrientationDate = previousOrientationDate;
+        this.allowLogin = allowLogin;
     }
 
     public Integer getId() {
@@ -108,6 +109,14 @@ public class EmployeesInfo implements Serializable {
 
     public void setPreviousOrientationDate(Date previousOrientationDate) {
         this.previousOrientationDate = previousOrientationDate;
+    }
+
+    public String getAllowLogin() {
+        return allowLogin;
+    }
+
+    public void setAllowLogin(String allowLogin) {
+        this.allowLogin = allowLogin;
     }
 
     @Override

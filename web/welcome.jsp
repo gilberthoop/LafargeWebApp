@@ -4,6 +4,7 @@
     Author     : 300091186
 --%>
 
+<%@page import="java.text.DateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="org.hibernate.Query"%>
 <%@page import="org.hibernate.Session"%>
@@ -29,6 +30,16 @@
                 background-color: #444;
                 background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png);    
             }
+            h6 { 
+    display: block;
+    font-size: 1.5em;
+    //margin-top: 0.5em;
+    //margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
         </style>
     </head>
     <body>
@@ -92,7 +103,7 @@
                                 <label for="empty"></label>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
-                                <button type="submit" class="update_button">Sign-in</button>
+                                <button type="submit" class="btn btn-success btn-block">Sign-in</button>
                             </div>
                         </div>
                     </form>
@@ -105,27 +116,25 @@
                 <% if (session.getAttribute("welcome") == null || session.getAttribute("welcome") == "") {%>
                 <%//out.println(request.getHeader("referer"));%>
                 <%} else {%>
-                <div id="flash" class="col-md-6 column well">
+                <div id="flash" class=" col-xs-12 col-sm-10 col-md-6 column well">
                     <%
                         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
                         Session sess = sessionFactory.openSession();
                         sess.beginTransaction();
-
                         try {
 
-                            Query query = sess.createQuery("from EmployeesSigninSignoff");
+                            Query query = sess.createQuery("from EmployeesSigninSignoff ORDER BY SignInTime desc");
                             List<EmployeesSigninSignoff> list = query.list();
                             for (EmployeesSigninSignoff ei : list) {
                                 System.out.println(ei.getFullName());
                     %>
                     <div id="update" class="row form-group">                        
-                        <div class="col-xs-9 col-sm-10 col-md-10">
-
-                            <h4><% ei.getFullName(); %></h4>
+                        <div class="col-xs-9 col-sm-10 col-md-10 label label-primary">
+                            <h6 class="text-left" style="text-align:left;float:left;"><%=ei.getFullName()%> - <%=ei.getCompany()%></h6><h6 style="text-align:right;float:right;"><%=DateFormat.getTimeInstance(DateFormat.MEDIUM).format(ei.getSignInTime())%></h6> 
                         </div>
                         <div class="col-xs-3 col-sm-2 col-md-2">
-                            <form action="" method="POST">
-                                <button type="submit" class="btn btn-danger">Sign-out</button>
+                            <form action="sign_out" method="POST">
+                                <button type="submit" name="logoutWorker" value ="<%=ei.getPhoneNumber()%>" class="btn btn-danger">Sign-out</button>
                             </form>
                         </div>
                     </div>
