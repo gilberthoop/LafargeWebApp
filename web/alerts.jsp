@@ -37,12 +37,12 @@
                     </a>
                 </div>
             </div>
-            <%//out.println(request.getHeader("referer")+" "+session.getAttribute("login")+" "+session.getAttribute("logout"));%>
+            <%//out.println(request.getHeader("referer")+" "+session.getAttribute("login")+" "+ request.getParameter("email"));%>
             <% if ((request.getHeader("referer").contains("LafargeLogApp") || request.getHeader("referer").contains("index")) && (session.getAttribute("login") == null && session.getAttribute("registration") == null && session.getAttribute("logout") == null)) {%>
             <div class="alert alert-danger">Invalid username or password <a href='index.jsp'>try again</a></div>
-            <%} else if ((request.getHeader("referer").contains("/") || request.getHeader("referer").contains("index")) && session.getAttribute("login") != null && session.getAttribute("userN") != null) {%>
+            <%} else if ((request.getHeader("referer").contains("/") || request.getHeader("referer").contains("index")) && session.getAttribute("login") != null && session.getAttribute("userN") != null && !request.getHeader("referer").contains("registration")) {%>
             <div class="alert alert-success">Login successful! Please wait...<%response.setHeader("Refresh", "3; URL=" + request.getContextPath() + "/welcome.jsp");%></div>
-            <%} else if (request.getHeader("referer").contains("registration") && (session.getAttribute("login") == null && session.getAttribute("registration") != null)) {%>
+            <%} else if (request.getHeader("referer").contains("registration") && session.getAttribute("registration") != null ) {%>
             <div class="alert alert-success">Registration successful! Login <a href='index.jsp'>here</a></div> 
             <%} else if (request.getHeader("referer").contains("registration") && (session.getAttribute("login") == null && session.getAttribute("registration") == null)) {%>
             <div class="alert alert-danger">Registration Failed! <a href='index.jsp'>try again</a></div> 

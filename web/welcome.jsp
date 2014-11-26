@@ -17,6 +17,42 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+        <script>
+            $(function () {
+                $(".update_button").click(function () {
+
+                    var boxval = $("#content").val();
+                    var dataString = 'content=' + boxval;
+
+                    if (boxval == '')
+                    {
+                        alert("Please Enter Some Text");
+                    }
+                    else
+                    {
+                        $("#flash").show();
+                        $("#flash").fadeIn(400).html('<img src="ajax-loader.gif" align="absmiddle"> 
+                                < span class = "loading" > Loading Comment... < /span>');
+
+                        $.ajax({
+                            type: "POST",
+                            url: "demo.jsp",
+                            data: dataString,
+                            cache: false,
+                            success: function (html) {
+                                $("ol#update").prepend(html);
+                                $("ol#update li:first").slideDown("slow");
+                                $("#content").value('');
+                                $("#content").focus();
+                                $("#flash").hide();
+                            }
+                        });
+                    }
+                    return false;
+                });
+            });
+        </script>
+
         <style>
             body{
                 background: url(http://mymaplist.com/img/parallax/back.png);
