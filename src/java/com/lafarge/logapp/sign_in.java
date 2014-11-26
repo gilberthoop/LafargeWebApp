@@ -106,7 +106,7 @@ public class sign_in extends HttpServlet {
                     found = true; 
                     pw.println(ei.getAllowLogin());
                     cal.setTime(ei.getPreviousOrientationDate());
-                    if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 0 || (cal.get(Calendar.MONTH)+1)-(now.get(Calendar.MONTH)+1) == 0 ){
+                    if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 0 && (cal.get(Calendar.MONTH)+1)-(now.get(Calendar.MONTH)+1) == 0 ){
                         ei.setAllowLogin("no");
                     }
                     context = "/welcome.jsp";
