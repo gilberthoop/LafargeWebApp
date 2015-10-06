@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -125,20 +126,21 @@ public class sign_in extends HttpServlet {
                 Date date = new Date();
                 ess.setSignInTime(new Timestamp(date.getTime()));
                 sess.save(ess);
-            } else {
-                eio.setFullName(fullName);
-                eio.setPhoneNumber(phoneNumber);
-                eio.setCompany(company);
-                Date date = new Date();
-                eio.setPreviousOrientationDate(new Timestamp(date.getTime()));
-                eio.setAllowLogin("yes");
-                sess.save(eio);
-                ess.setFullName(fullName);
-                ess.setPhoneNumber(phoneNumber);
-                ess.setCompany(company);
-                ess.setSignInTime(new Timestamp(date.getTime()));
-                sess.save(ess);
-            }
+            } 
+//            else {
+//                eio.setFullName(fullName);
+//                eio.setPhoneNumber(phoneNumber);
+//                eio.setCompany(company);
+//                Date date = new Date();
+//                eio.setPreviousOrientationDate(new Timestamp(date.getTime()));
+//                eio.setAllowLogin("yes");
+//                sess.save(eio);
+//                ess.setFullName(fullName);
+//                ess.setPhoneNumber(phoneNumber);
+//                ess.setCompany(company);
+//                ess.setSignInTime(new Timestamp(date.getTime()));
+//                sess.save(ess);
+//            }
         } finally {
             sess.getTransaction().commit();
             sess.close();

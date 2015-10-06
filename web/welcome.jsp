@@ -125,29 +125,27 @@
                                 <input type="text" class="form-control" name="company" id="content" placeholder="Company" required/>
                             </div>
                         </div>
-                        
-                        <% if (session.getAttribute("orientation") != null) {%>
+
+             <!---          -->
                         <div class="row">
-                            <div class="col-xs-9 col-sm-9 col-md-9">
-                            <a href="" class="btn btn-info btn-block">Orientation Required</a>
-                        </div>
-                            <div class="col-xs-3 col-sm-3 col-md-3">
-                                <button type="submit" class="btn btn-success btn-block">Sign-in</button>
-                            </div>
-                        </div>
-                        <%session.setAttribute("orientation", null);} else {%>
-                            <div class="row">
                             <div class="col-xs-9 col-sm-9 col-md-9">
                                 <label for="empty"></label>
                             </div>
-                            <div class="col-xs-3 col-sm-3 col-md-3">
+                            <div class="col-xs-8 col-sm-8 col-md-8">
+                                <a href="orientation.jsp" class="btn btn-info btn-block">Orientation Required</a>
+                            </div>
+                            <!---          -->
+                            <div class="col-xs-4 col-sm-4 col-md-4">
                                 <button type="submit" class="btn btn-success btn-block">Sign-in</button>
                             </div>
                         </div>
-                        <%}%>
+              <!---          -->
+                     
+               <!---          -->
+                     <%}%>
                     </form>
-                   
-                    <%}%>
+                 <!---          -->
+                     
                 </div>
 
                 <div class="col-md-1 column">
