@@ -1,7 +1,7 @@
 <%-- 
     Document   : welcome
     Created on : 18-Nov-2014, 4:36:28 PM
-    Author     : 300091186
+    Author     : William Go
 --%>
 
 <%@page import="java.text.DateFormat"%>
