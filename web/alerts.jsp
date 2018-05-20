@@ -1,7 +1,7 @@
 <%-- 
     Document   : login_failed
     Created on : Nov 20, 2014, 8:43:25 PM
-    Author     : clementino
+    Author     : William Go
 --%>
 <%@page import="com.lafarge.logapp.*"%>
 <%@page import="java.util.Date"%>
