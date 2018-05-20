@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 28-Oct-2014, 5:53:18 PM
-    Author     : 300091186
+    Author     : William Go
 --%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
