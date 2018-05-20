@@ -1,7 +1,7 @@
 <%-- 
     Document   : error
     Created on : Nov 22, 2014, 7:14:30 PM
-    Author     : clementino
+    Author     : William Go
 --%>
 
 <%@page import="java.util.Date"%>
