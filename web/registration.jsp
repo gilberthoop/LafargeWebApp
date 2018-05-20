@@ -1,7 +1,7 @@
 <%-- 
     Document   : registration
     Created on : 28-Oct-2014, 6:01:07 PM
-    Author     : 300091186
+    Author     : William Go
 --%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
