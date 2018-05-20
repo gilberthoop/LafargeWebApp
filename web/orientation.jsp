@@ -1,7 +1,7 @@
 <%-- 
     Document   : orientation
     Created on : 12-Dec-2014, 8:57:36 PM
-    Author     : merlyn
+    Author     : William Go
 --%>
 
 <%@page import="java.util.Date"%>
